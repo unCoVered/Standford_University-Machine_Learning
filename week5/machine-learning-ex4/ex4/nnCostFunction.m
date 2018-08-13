@@ -81,6 +81,16 @@ for i = 1:m
     yVec(i,y(i)) = 1;
 end
 
+for i = 1:m
+    
+    term1 = -yVec(i,:) .* log(hThetaX(i,:));
+    term2 = (ones(1,num_labels) - yVec(i,:)) .* log(ones(1,num_labels) - hThetaX(i,:));
+    J = J + sum(term1 - term2);
+    
+end
+
+J = J / m;
+
 J = 1/m * sum(sum(-1 * yVec .* log(hThetaX)-(1-yVec) .* log(1-hThetaX)));
 
 regularator = (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2))) * (lambda/(2*m));
